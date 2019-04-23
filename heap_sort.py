@@ -32,19 +32,25 @@ def heapSort(arr):
         #heapify root element
         heapify(arr, i, 0)
 
-""" 
-# Driver code to test above 
-arr = [12, 34, 54, 2, 3] 
 
-print ("Array before sorting:")
-print(arr)
-"""
+# Driver code to test above 
+# arr = [12, 34, 54, 2, 3] 
+
+# print ("Array before sorting:")
+# print(arr)
+
 arr = list(map(int,input().rstrip().split()))
 
-inicio = time.time()
+# Beginning to measure execution time
+start = time.time()
+
 heapSort(arr)
-final = time.time()
-"""
-print ("\nArray after sorting:") 
-print(arr)
-"""
+
+# Ending runtime measurement
+end = time.time()
+
+# Printing enlapsed time
+print('%.5f' % (end - start))
+
+# print ("\nArray after sorting:") 
+# print(arr)

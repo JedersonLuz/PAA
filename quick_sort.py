@@ -46,13 +46,21 @@ def quickSort(arr,low,high):
 # Driver code to test above 
 # arr = [12, 34, 54, 2, 3] 
 arr = list(map(int,input().rstrip().split()))
-  
-n = len(arr) 
+
 # print ("Array before sorting:") 
 # print(arr)
+
+# Beginning to measure execution time
+start = time.time()
   
 n = len(arr) 
 quickSort(arr,0,n-1)
-  
+
+# Ending runtime measurement
+end = time.time()
+
+# Printing enlapsed time
+print('%.5f' % (end - start))
+
 # print ("\nArray after sorting:") 
 # print(arr)
