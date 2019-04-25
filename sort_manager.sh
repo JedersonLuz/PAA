@@ -1,20 +1,34 @@
-python gerar_casos.py 100000
+mkdir inputs
 
-# Melhor Caso
-casos = ("inputs/melhor" "inputs/pior" "inputs/medio")
-for local in $casos
+saida_quick=0
+saida_heap=0
+saida_shell=0
+
+for local in "melhor" "pior" "medio"
 do
-    for i in 'seq 1 20'
+    cd inputs
+    mkdir $local
+    cd ..
+    echo $local",Heap,Quick,Shell" > Resultado_$local.csv
+
+    for quantidade in "100000" "200000" "500000"
     do
-        python quick_sort.py < '$local/caso$i.txt' > saida_quick
-        python heap_sort.py < '$local/caso$i.txt' > saida_heap
-        python shell_sort.py < '$local/caso$i.txt' > saida_shell
-        sum_quick = $((saida_quick + sum_quick))
-        sum_heap = $((saida_heap + sum_heap))
-        sum_shell = $((saida_shell + sum_shell))
+        python3 gerar_casos.py $local $quantidade
+        for i in `seq 0 9`
+        do
+            echo $local' com '$quantidade' quick_sort caso'$i' Iniciou'
+            python3 quick_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_quick
+            echo $local' com '$quantidade' quick_sort caso'$i' Encerrou'
+            echo $local' com '$quantidade' heap_sort caso'$i' Iniciou'
+            python3 heap_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_heap
+            echo $local' com '$quantidade' heap_sort caso'$i' Encerrou'
+            echo $local' com '$quantidade' shell_sort caso'$i' Iniciou'
+            python3 shell_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_shell
+            echo $local' com '$quantidade' shell_sort caso'$i' Encerrou'
+            sum_quick=$(($saida_quick+$sum_quick))
+            sum_heap=$(($saida_heap+$sum_heap))
+            sum_shell=$(($saida_shell+$sum_shell))
+        done
+        echo $quantidade','$(($sum_heap / 20))','$(($sum_quick / 20))','$(($sum_shell / 20)) >> Resultado_$local.csv
     done
 done
-
-
-echo "MC,Heap,Quick,Shell" > Resultado_MC.csv
-echo "100000"
