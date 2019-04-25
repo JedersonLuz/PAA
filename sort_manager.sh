@@ -1,8 +1,5 @@
+#!/bin/bash
 mkdir inputs
-
-saida_quick=0
-saida_heap=0
-saida_shell=0
 
 for local in "melhor" "pior" "medio"
 do
@@ -13,25 +10,14 @@ do
 
     for quantidade in "50000" "100000" "500000"
     do
-        sum_quick=0
-        sum_heap=0
-        sum_shell=0 
         python3 gerar_casos.py $local $quantidade
-        for i in `seq 0 2`
-        do
-            echo $local' com '$quantidade' quick_sort caso'$i' Iniciou'
-            python3 quick_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_quick
-            echo $local' com '$quantidade' quick_sort caso'$i' Encerrou'
-            echo $local' com '$quantidade' heap_sort caso'$i' Iniciou'
-            python3 heap_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_heap
-            echo $local' com '$quantidade' heap_sort caso'$i' Encerrou'
-            echo $local' com '$quantidade' shell_sort caso'$i' Iniciou'
-            python3 shell_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_shell
-            echo $local' com '$quantidade' shell_sort caso'$i' Encerrou'
-            sum_quick=$(($saida_quick+$sum_quick))
-            sum_heap=$(($saida_heap+$sum_heap))
-            sum_shell=$(($saida_shell+$sum_shell))
-        done
-        echo $quantidade','$(($sum_heap / 20))','$(($sum_quick / 20))','$(($sum_shell / 20)) >> Resultado_$local.csv
+        sh usertosort.sh $local $quantidade &
     done
+    wait
 done
+
+# Espera os os filhos terminar
+wait
+
+# Desligar o PC
+# shutdown -h now

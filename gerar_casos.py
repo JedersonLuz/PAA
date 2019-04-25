@@ -8,7 +8,7 @@ for c in range(3):
     for i in range(n):
         numeros.append(i+1)
 
-    file = open('inputs/'+str(sys.argv[1])+'/caso'+str(c)+'.txt', 'w')
+    file = open('inputs/'+str(sys.argv[1])+'/'+sys.argv[2]+'caso'+str(c)+'.txt', 'w')
     
     if sys.argv[1] == 'melhor':
         for numero in numeros:
