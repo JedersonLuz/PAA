@@ -11,10 +11,13 @@ do
     cd ..
     echo $local",Heap,Quick,Shell" > Resultado_$local.csv
 
-    for quantidade in "100000" "200000" "500000"
+    for quantidade in "50000" "100000" "500000"
     do
+        sum_quick=0
+        sum_heap=0
+        sum_shell=0 
         python3 gerar_casos.py $local $quantidade
-        for i in `seq 0 9`
+        for i in `seq 0 2`
         do
             echo $local' com '$quantidade' quick_sort caso'$i' Iniciou'
             python3 quick_sort.py < 'inputs/'$local'/caso'$i'.txt' > $saida_quick
