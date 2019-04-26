@@ -1,89 +1,46 @@
+import random
 import time
 
-# Python program for implementation of Quicksort  
-  
-# This function is same in both iterative and recursive 
-def partition(arr,l,h): 
-    i = ( l - 1 ) 
-    x = arr[h] 
-  
-    for j in range(l , h): 
-        if   arr[j] <= x: 
-  
-            # increment index of smaller element 
-            i = i+1
-            arr[i],arr[j] = arr[j],arr[i] 
-  
-    arr[i+1],arr[h] = arr[h],arr[i+1] 
-    return (i+1) 
-  
-# Function to do Quick sort 
-# arr[] --> Array to be sorted, 
-# l  --> Starting index, 
-# h  --> Ending index 
-def quickSort(arr,l,h): 
-  
-    # Create an auxiliary stack 
-    size = h - l + 1
-    stack = [0] * (size) 
-  
-    # initialize top of stack 
-    top = -1
-  
-    # push initial values of l and h to stack 
-    top = top + 1
-    stack[top] = l 
-    top = top + 1
-    stack[top] = h 
-  
-    # Keep popping from stack while is not empty 
-    while top >= 0: 
-  
-        # Pop h and l 
-        h = stack[top] 
-        top = top - 1
-        l = stack[top] 
-        top = top - 1
-  
-        # Set pivot element at its correct position in 
-        # sorted array 
-        p = partition( arr, l, h ) 
-  
-        # If there are elements on left side of pivot, 
-        # then push left side to stack 
-        if p-1 > l: 
-            top = top + 1
-            stack[top] = l 
-            top = top + 1
-            stack[top] = p - 1
-  
-        # If there are elements on right side of pivot, 
-        # then push right side to stack 
-        if p+1 < h: 
-            top = top + 1
-            stack[top] = p + 1
-            top = top + 1
-            stack[top] = h 
+class Quick(object):
+    def particao(self, a, ini, fim):
+        pivo = a[fim-1]
+        start = ini
+        end = ini
+        for i in range(ini,fim):
+            if a[i] > pivo:
+                end += 1
+            else:
+                end += 1       
+                start += 1
+                aux = a[start-1]
+                a[start-1] = a[i]
+                a[i] = aux
+        return start-1
+        
+    def quickSort(self, a, ini, fim):
+        if ini < fim:
+            pp = self.randparticao(a, ini, fim)
+            self.quickSort(a, ini, pp)
+            self.quickSort(a, pp+1,fim)
+        return a
+        
+    def randparticao(self,a,ini,fim):
+        rand = random.randrange(ini,fim)
+        aux = a[fim-1]
+        a[fim-1] = a[rand]
+        a[rand] = aux
+        return self.particao(a,ini,fim)
 
-
-# Driver code to test above 
-# arr = [12, 34, 54, 2, 3] 
 arr = list(map(int,input().rstrip().split()))
-
-# print ("Array before sorting:") 
-# print(arr)
 
 # Beginning to measure execution time
 start = time.time()
-  
-n = len(arr) 
-quickSort(arr,0,n-1)
+
+q = Quick()
+q.quickSort(arr,0,len(arr))
 
 # Ending runtime measurement
 end = time.time()
 
 # Printing enlapsed time
 print('%.5f' % (end - start))
-
-# print ("\nArray after sorting:") 
-# print(arr)
