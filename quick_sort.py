@@ -1,66 +1,46 @@
+import random
 import time
 
-# Python program for implementation of Quicksort Sort 
+class Quick(object):
+    def particao(self, a, ini, fim):
+        pivo = a[fim-1]
+        start = ini
+        end = ini
+        for i in range(ini,fim):
+            if a[i] > pivo:
+                end += 1
+            else:
+                end += 1       
+                start += 1
+                aux = a[start-1]
+                a[start-1] = a[i]
+                a[i] = aux
+        return start-1
+        
+    def quickSort(self, a, ini, fim):
+        if ini < fim:
+            pp = self.randparticao(a, ini, fim)
+            self.quickSort(a, ini, pp)
+            self.quickSort(a, pp+1,fim)
+        return a
+        
+    def randparticao(self,a,ini,fim):
+        rand = random.randrange(ini,fim)
+        aux = a[fim-1]
+        a[fim-1] = a[rand]
+        a[rand] = aux
+        return self.particao(a,ini,fim)
 
-# This function takes last element as pivot, places 
-# the pivot element at its correct position in sorted 
-# array, and places all smaller (smaller than pivot) 
-# to left of pivot and all greater elements to right 
-# of pivot 
-def partition(arr,low,high): 
-	i = ( low-1 )		 # index of smaller element 
-	pivot = arr[high]	 # pivot 
-
-	for j in range(low , high): 
-
-		# If current element is smaller than or 
-		# equal to pivot 
-		if arr[j] <= pivot: 
-		
-			# increment index of smaller element 
-			i = i+1
-			arr[i],arr[j] = arr[j],arr[i] 
-
-	arr[i+1],arr[high] = arr[high],arr[i+1] 
-	return ( i+1 ) 
-
-# The main function that implements QuickSort 
-# arr[] --> Array to be sorted, 
-# low --> Starting index, 
-# high --> Ending index 
-
-# Function to do Quick sort 
-def quickSort(arr,low,high): 
-	if low < high: 
-
-		# pi is partitioning index, arr[p] is now 
-		# at right place 
-		pi = partition(arr,low,high) 
-
-		# Separately sort elements before 
-		# partition and after partition 
-		quickSort(arr, low, pi-1) 
-		quickSort(arr, pi+1, high) 
-
-
-# Driver code to test above 
-# arr = [12, 34, 54, 2, 3] 
 arr = list(map(int,input().rstrip().split()))
-
-# print ("Array before sorting:") 
-# print(arr)
 
 # Beginning to measure execution time
 start = time.time()
-  
-n = len(arr) 
-quickSort(arr,0,n-1)
+
+q = Quick()
+q.quickSort(arr,0,len(arr))
 
 # Ending runtime measurement
 end = time.time()
 
 # Printing enlapsed time
 print('%.5f' % (end - start))
-
-# print ("\nArray after sorting:") 
-# print(arr)
